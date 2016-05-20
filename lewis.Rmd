@@ -1,0 +1,142 @@
+---
+title: "Scaling out R in practice"
+author: "Bryan W. Lewis (blewis@illopsed.net)"
+output:
+  ioslides_presentation:
+    bigger: true
+    widescreen: true
+    css: css.css
+---
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/>
+You know how this starts
+</div>
+- Some data, maybe a lot of data
+- Maybe a database
+- Extra analysis tools
+- More computing horsepower
+- Before you know it, you end up with...
+
+
+##
+<div style="position: absolute; left: 0px; top: 0px;">
+<img src="./bigdata1.png" alt="" width="100%"></img>
+</div>
+
+##
+<div style="position: absolute; left: 0px; top: 0px;">
+<img src="./bigdata5.png" alt="" width="100%"></img>
+</div>
+
+##
+<div style="position: absolute; top: 0px; left: 0px;">
+<img src="./orcl.png" alt="" height="100%"></img>
+</div>
+
+##
+<div style="position: absolute; left: 0px; top: 0px;">
+<img src="./soviet.png" alt="" height="100%" ></img>
+</div>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+Eventually, some of those arrows connect to R.
+</div>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+Moving data around data centers not as big of a deal as you might think.
+</div>
+http://www.eecs.berkeley.edu/~ganesha/disk-irrelevant_hotos2011.pdf
+<br/><br/>
+Cache/fast storage reuse is usually more important.
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+Marshaling those data in and out of misc. data formats is a big deal!
+</div>
+http://blog.cloudera.com/blog/2016/03/feather-a-fast-on-disk-format-for-data-frames-for-r-and-python-powered-by-apache-arrow/
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black; text-align: right; z-index: 100;">
+Yuck!
+</div>
+<img src="column.png" style="position: absolute; top: 20px; z-index: -1;" alt=""></img>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+Feather: a common data frame serialization format for R and Python and ...
+</div>
+https://github.com/wesm/feather
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black; text-align: right; z-index: 100;">
+<br/>
+SciDB streaming API
+<br/>
+</div>
+<img src="scidb.jpg" style="position: absolute; left: 800px; top: 20px; z-index: -1;" alt=""></img>
+<img src="scidb-strm.png" style="position: absolute; top: 120px; z-index: -1;" alt=""></img>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+Feathercache: a fast object store interface for R (experimental)
+</div>
+Simple GET/PUT/DELETE interface
+
+- https://github.com/bwlewis/lz4
+- https://github.com/bwlewis/feathercache
+
+##
+<img src="feathercache.png" style="position: absolute; left: 150px; top: 20px; z-index: -1;" alt=""></img>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+High compute/data ratios benefit from elastic compute
+</div>
+
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/>
+Elastic computing with R and Redis on Amazon EC2
+</div>
+<img src="elastic.png" style="position: absolute; left: 0px; top: 350px; z-index: -1;" alt=""></img>
+
+##
+<img src="doRedis.png" style="position: absolute; top: 20px; z-index: -1;" alt=""></img>
+
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/>
+doRedis update due to CRAN soon, for now use GitHub
+</div>
+https://github.com/bwlewis/doRedis
+<p/>
+Vignettes
+
+- https://github.com/bwlewis/doRedis/blob/master/vignettes/doRedis.pdf
+- https://github.com/bwlewis/doRedis/blob/master/vignettes/Amazon.pdf
+- https://github.com/bwlewis/doRedis/blob/master/vignettes/Debug.pdf
+
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/>
+Amazon EC2 Recipe
+</div>
+
+1. Instantiate a Linux image
+2. Install R and desired packages, including doRedis
+3. Run the doRedis service installer script
+4. Make an AMI from this instance
+5. Re-launch from AMI as needed, supplying config as EC2 user data
