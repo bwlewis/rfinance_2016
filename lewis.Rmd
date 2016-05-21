@@ -1,5 +1,5 @@
 ---
-title: "Scaling out R in practice"
+title: "R in practice, at scale"
 author: "Bryan W. Lewis (blewis@illopsed.net)"
 output:
   ioslides_presentation:
@@ -11,12 +11,41 @@ output:
 ##
 <div style="font-face: Sans-serif; font-size: 36pt; color: black;">
 <br/><br/>
+PDQ ATS research system
+</div>
+- Users new to R
+- TAQ data assembled into partial books
+- Running in Amazon EC2
+- Research focused on transaction costs
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+Support diverse exploratory research programs
+</div>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+Running across all tickers from days to months or so
+</div>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
+Lightweight software footprint, easy to use
+</div>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/>
 You know how this starts
 </div>
 - Some data, maybe a lot of data
 - Maybe a database
-- Extra analysis tools
-- More computing horsepower
+- Complicated modeling and research; need R or Python to be productive
+- Then, maybe throw even more analysis tools into the mix
+- You find yourself adding more computing horsepower
 - Before you know it, you end up with...
 
 
@@ -43,13 +72,13 @@ You know how this starts
 ##
 <div style="font-face: Sans-serif; font-size: 36pt; color: black;">
 <br/><br/><br/>
-Eventually, some of those arrows connect to R.
+Eventually, some of those arrows connect to R
 </div>
 
 ##
 <div style="font-face: Sans-serif; font-size: 36pt; color: black;">
 <br/><br/><br/>
-Moving data around data centers not as big of a deal as you might think.
+Moving data around data centers not as big of a deal as you might think
 </div>
 http://www.eecs.berkeley.edu/~ganesha/disk-irrelevant_hotos2011.pdf
 <br/><br/>
@@ -58,7 +87,7 @@ Cache/fast storage reuse is usually more important.
 ##
 <div style="font-face: Sans-serif; font-size: 36pt; color: black;">
 <br/><br/><br/>
-Marshaling those data in and out of misc. data formats is a big deal!
+Marshaling those data in and out of various data formats is a big deal!
 </div>
 http://blog.cloudera.com/blog/2016/03/feather-a-fast-on-disk-format-for-data-frames-for-r-and-python-powered-by-apache-arrow/
 
@@ -87,22 +116,23 @@ SciDB streaming API
 ##
 <div style="font-face: Sans-serif; font-size: 36pt; color: black;">
 <br/><br/><br/>
+Databases a great at managing mutable data
+<br/><br/>
+Append-only data are much simpler to work with
+</div>
+
+##
+<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
+<br/><br/><br/>
 Feathercache: a fast object store interface for R (experimental)
 </div>
-Simple GET/PUT/DELETE interface
+Simple GET/PUT/DELETE-like interface
 
 - https://github.com/bwlewis/lz4
 - https://github.com/bwlewis/feathercache
 
 ##
 <img src="feathercache.png" style="position: absolute; left: 150px; top: 20px; z-index: -1;" alt=""></img>
-
-##
-<div style="font-face: Sans-serif; font-size: 36pt; color: black;">
-<br/><br/><br/>
-High compute/data ratios benefit from elastic compute
-</div>
-
 
 ##
 <div style="font-face: Sans-serif; font-size: 36pt; color: black;">
